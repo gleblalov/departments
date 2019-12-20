@@ -1,7 +1,7 @@
 # departments
 test task 
 
-## Running the app
+## Running the api
 
 ```bash
 # development
@@ -10,9 +10,8 @@ $ npm run start
 # watch mode
 $ npm run start:dev
 ```
-## Running the app
+## Running the client
 ```bash
-# development
 $ ng serve
 ```
 
