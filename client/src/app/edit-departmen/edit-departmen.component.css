@@ -1,0 +1,58 @@
+.new-depart{
+    background-color: rgb(219, 219, 221);
+    padding: 0 2% 2% 2%;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 20%;
+    left: 30%;
+    z-index: 100;
+}
+
+.icon-close{
+    position: absolute;
+    top: 2%;
+    right: 1%;
+    z-index: 1;
+    cursor: pointer;
+    font-size: 30px;
+    transition: color .1s linear;
+}
+
+.icon-close:hover{
+    color: red;
+}
+
+.headline{
+    font-size: 20px;
+    font-weight: bold;
+    opacity: .9;
+    margin: 10px 0;
+}
+
+.btn-save{
+    margin: 5px auto;
+    width: 30%;
+}
+
+.validation {
+    color: red;
+  }
+
+.validationBorder{
+    border: 1px solid red;
+}
+
+input{
+    text-transform: capitalize;  
+}
+
+/* .input-title.ng-invalid.ng-touched{
+    border: 1px solid red;
+}
+
+.input-title.ng-valid.ng-touched{
+    border: 1px solid green;
+} */
+

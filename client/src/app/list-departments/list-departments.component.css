@@ -1,0 +1,40 @@
+.section{
+    display: flex;
+    justify-content: center;
+    margin: 30px auto;
+    width: 60%;
+}
+
+.section-table{
+    width: 90%;
+}
+
+.btn-create{
+    width: auto;
+    height: 5%;
+    text-align: center;
+    line-height: 0;
+    position: absolute;
+    top: 6%;
+    right: 20%;
+    z-index: 1;
+}
+
+.section i{
+    cursor: pointer;
+}
+
+.section i:hover{
+    font-weight: bold;
+}
+
+.table-buttons i{
+    margin-right: 10px;
+}
+
+.test{
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    z-index: 100;
+}

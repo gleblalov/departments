@@ -1,0 +1,8 @@
+<div class="section">
+    <div class="btn-group toogle-buttons" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-secondary" [routerLink]="['home']">Departments</button>
+            <button type="button" class="btn btn-secondary" (click)="openListEmployees()">Employees</button>
+    </div>
+    
+    <router-outlet></router-outlet>
+</div>

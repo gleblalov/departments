@@ -1,0 +1,48 @@
+<div class="section">
+    <span class="section-type">{{departmentId ? 'Employees for department - ' + getTitleDepartment(departmentId)  : 'All employees'}}</span>
+    <button type="button" class="btn btn-primary btn-create" [routerLink]="['/employees', 'edit-employee']">New employee</button>
+    <table class="table table-sm table-hover">
+        <thead thead-light>     
+        <tr>
+            <th scope="col">First name</th>
+            <th scope="col">Last name</th>
+            <th scope="col">Position</th>
+            <th scope="col">Department</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let employee of employees">
+            <td>{{employee.fname}}</td>
+            <td>{{employee.lname}}</td>
+            <td>{{employee.position}}</td>
+            <td>{{getTitleDepartment(employee.departmentID)}}</td>
+            <td>
+                <div class="table-buttons">
+                    <i class="material-icons" (click)="openEmployee(employee)">create</i>
+                    <i class="material-icons" (click)="deleteEmployee(employee.id)">delete_sweep</i>
+                </div>
+            </td> 
+        </tr>
+        </tbody>
+    </table>
+    <router-outlet></router-outlet>
+</div>
+
+
+
+<!-- <ul class="list-group">
+    <li class="list-group-item list-group-item-action employee" *ngFor="let employee of employees">
+        <div class="employee-fields">
+            <span>{{employee.fname}}</span>
+            <span>{{employee.lname}}</span>
+            <span>{{employee.position}}</span>
+            <span>{{getTitleDepartment(employee.departmentID)}}</span>
+        </div>
+        
+        <div class="table-buttons">
+            <i class="material-icons" (click)="openEmployee(employee)">create</i>
+            <i class="material-icons" (click)="deleteEmployee(employee.id)">delete_sweep</i>
+        </div>
+    </li>
+</ul> -->

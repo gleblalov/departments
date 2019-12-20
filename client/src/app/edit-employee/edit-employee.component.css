@@ -1,0 +1,56 @@
+.section{
+    background-color: rgb(219, 219, 221);
+    padding: 1% 2%;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 7%;
+    left: 30%;
+    z-index: 10011111;
+}
+
+.icon-close{
+    position: absolute;
+    top: 2%;
+    right: 1%;
+    z-index: 1;
+    cursor: pointer;
+    font-size: 30px;
+    transition: color .1s linear;
+}
+
+.icon-close:hover{
+    color: red;
+}
+
+.select{
+    overflow: scroll;
+}
+
+.section-additionally{
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-save{
+    margin-left: 50%;
+    transform: translateX(-50%);
+    width: 30%;
+}
+
+.validation.ng-invalid.ng-touched{
+    border: 1px solid red;
+}
+
+.validation.ng-valid.ng-touched{
+    border: 1px solid green;
+}
+
+.validationText {
+    color: red;
+}
+
+.letterUpperCase{
+    text-transform: capitalize;
+}
