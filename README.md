@@ -1,10 +1,19 @@
 # departments
 test task 
 
-Running the api
+## Running the app
+
+```bash
+# development
+$ npm run start
+
+# watch mode
 $ npm run start:dev
-
-Running the client
+```
+## Running the app
+```bash
+# development
 $ ng serve
+```
 
-Navigate to http://localhost:4200/
+## Navigate to http://localhost:4200/
