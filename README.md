@@ -16,3 +16,11 @@ $ ng serve
 ```
 
 ## Navigate to http://localhost:4200/
+
+
+-------------------------------------
+## Additionally
+```bash
+$ npm install -g @angular/cli - Install the Angular CLI
+$ npm i -g @nestjs/cli - Install the Nest CLI
+```
