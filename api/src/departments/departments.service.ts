@@ -12,19 +12,54 @@ export class DepartmentsService {
       ) { }
 
     async getDepartments(): Promise<Department[]> {
-      return await this.departmentsRepository.find();
+      const departments = await this.departmentsRepository.find();
+      return departments
     }
 
     async addDepartment(department: Department): Promise<Department> {
-      return await this.departmentsRepository.save(department);
+       const foundDepartment = await this.departmentsRepository.findOne({
+         where: {
+           title: department.title
+         }
+       })
+
+       if(!foundDepartment){
+         const saveDepartment = await this.departmentsRepository.save(department);
+         return saveDepartment
+       } else {
+         return null
+       }
     }
 
-    async changeDepartment(id: ObjectID, department: Department): Promise<any>  {
-      return await this.departmentsRepository.update(id, department);
+    async changeDepartment(id: ObjectID, department: Department)  {
+      const foundDepartment = await this.departmentsRepository.findOne({
+        where: {
+          title: department.title
+        }
+      })
+    
+      if(!foundDepartment){
+        const result = await this.departmentsRepository.update(id, department);
+        return result
+      } 
+
+      if(foundDepartment && foundDepartment.id == department.id){
+        const result = await this.departmentsRepository.update(id, department);
+        return result
+      } 
+      
+      return null
     }
 
     async deleteDepartment(id: ObjectID) {
-      return await this.departmentsRepository.delete(id);
+      const foundDepartment = await this.departmentsRepository.findOne(id)
+      console.log(foundDepartment)
+
+      if(foundDepartment){
+        return  this.departmentsRepository.delete(id);
+      } else {
+        return null
+      }
     }
   
 }

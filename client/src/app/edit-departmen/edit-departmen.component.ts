@@ -53,24 +53,33 @@ export class EditDepartmenComponent implements OnInit {
   }
   
   saveDepartment(){
-    this.depService.departments.forEach(item  => {
-      if(item.title === this.form.value.title){
-        this.validationTitle = false
-      }
-    })
-    if(this.validationTitle){
       this.department = {...this.form.value}
+
       if(this.isEditDepartment === false){
         this.depService.saveDepartment(this.department).subscribe((response) => {
           this.passParameters(response);
+        }, err => {
+          if(err.error.message === 'this title is already registered'){
+            this.validationTitle = false
+            console.error(err);
+          } else {
+            console.error(err);
+          }
         });
       }
+
       if(this.isEditDepartment === true){
-        this.depService.editDepartment(this.department).subscribe(() => {
+        this.depService.editDepartment(this.department).subscribe((response) => {
+          console.log(this.department)
           this.passParameters(this.department);
+        }, err => {
+          if(err.error.message === 'this title is already registered'){
+            this.validationTitle = false
+          } else {
+            console.error(err);
+          }
         });
       }
-    }
   }
 
   passParameters(department){
@@ -131,3 +140,40 @@ export class EditDepartmenComponent implements OnInit {
 //    }
 //    return null
 //  }
+
+
+
+
+// saveDepartment(){   последний
+//   this.depService.departments.forEach(item  => {
+//     if(item.title === this.form.value.title){
+//       this.validationTitle = false
+//     }
+//   })
+//   if(this.validationTitle){
+//     this.department = {...this.form.value}
+//     if(this.isEditDepartment === false){
+//       this.depService.saveDepartment(this.department).subscribe((response) => {
+//         this.passParameters(response);
+//       }, err => {
+//         throw err
+//         console.error(err);
+//       });
+//     }
+//     if(this.isEditDepartment === true){
+//       this.depService.editDepartment(this.department).subscribe(() => {
+//         this.passParameters(this.department);
+//       });
+//     }
+//   }
+// }
+
+// passParameters(department){
+//   let navigationExtras: NavigationExtras = {
+//     queryParams: {
+//       isEditDepartment: this.isEditDepartment,
+//       newDepartment: JSON.stringify(department)
+//     }
+//   };
+//   this.router.navigate([''], navigationExtras);
+// }

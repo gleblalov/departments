@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Put, Delete, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Delete, Param, HttpStatus, Res } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
 import { Employee, } from '../model';
 import { ObjectID } from 'typeorm';
@@ -9,32 +9,81 @@ export class EmployeesController {
     constructor(private empService: EmployeesService) {}
 
     @Get()
-    async getEmployees() {
-        return await this.empService.getEmployees();
+    async getEmployees(@Res() res) {
+        const result = await this.empService.getEmployees();
+
+        if(result.length > 0){
+            return res.status(HttpStatus.OK).send(result);
+        }
+
+        if(result.length === 0){
+            return res.status(HttpStatus.NOT_FOUND).send({
+                message: 'Failed to get employees'
+            });
+        }
     } 
 
     @Get(':id')
-    async getEmployeesForDepartment(@Param('id') id: ObjectID) {
-        return await this.empService.getEmployeesForDepartment(id);
+    async getEmployeesForDepartment(@Res() res, @Param('id') id: ObjectID) {
+        const result = await this.empService.getEmployeesForDepartment(id);
+
+        if(result.length > 0){
+            return res.status(HttpStatus.OK).send(result);
+        }
+
+        if(result.length === 0){
+            return res.status(HttpStatus.NOT_FOUND).send({
+                message: 'Failed to get employees'
+            });
+        }
     }
 
     @Post()
-    async addEmployee(@Body() employee: Employee) {
-        return await this.empService.addEmployee(employee); 
+    async addEmployee(@Res() res, @Body() employee: Employee) {
+        const result = await this.empService.addEmployee(employee); 
+
+        if(result !== null){
+            return res.status(HttpStatus.OK).json({result});
+        }
+        if(result === null){
+            return res.status(HttpStatus.NOT_FOUND).send({
+                message: 'this email is busy'
+            });
+        }
     }
 
     @Put(':id')
-    async changeEmployee(@Param('id') id: ObjectID, @Body() employee: Employee) {
-        return await this.empService.changeEmployee(id, employee);
+    async changeEmployee(@Res() res, @Param('id') id: ObjectID, @Body() employee: Employee) {
+        const result = await this.empService.changeEmployee(id, employee);
+
+        if(result !== null){
+            return res.status(HttpStatus.OK).send();
+        }
+        if(result === null){
+            return res.status(HttpStatus.NOT_FOUND).send({
+                message: 'this email is busy'
+            });
+        }
     }
 
     @Delete(':id')
-    async deleteEmployee(@Param('id') id: ObjectID) {
-        return this.empService.deleteEmployee(id);
-    }
+    async deleteEmployee(@Res() res, @Param('id') id: ObjectID) {
+        const result = await this.empService.deleteEmployee(id);
 
-    @Get('test/:email')
-    async checkEmail(@Param('email') email: string) {
-        return await this.empService.checkEmail(email); 
+        if(result !== null){
+            return res.status(HttpStatus.OK).send();
+        }
+        if(result === null){
+            return res.status(HttpStatus.NOT_FOUND).send({
+                message: 'Employee was not deleted'
+            });
+        }
     }
 }
+
+
+
+// @Get('check/:email')
+    //  checkEmail(@Param('email') email: string) {
+    //     return  this.empService.checkEmail(email); 
+    // }

@@ -24,11 +24,10 @@ export class DepartmentService {
   }
 
   editDepartment(department): Observable<Department>{
-    const test = this.http.put<Department>(`${this.url}/${department.id}`, department);
-    return test;
+    return this.http.put<Department>(`${this.url}/${department.id}`, department);
   }
 
   deleteDepartment(id): Observable<Department> {
-    return this.http.delete<Department>(`${this.url}/${id}`);
+    return  this.http.delete<Department>(`${this.url}/${id}`);
   } 
 }

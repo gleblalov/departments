@@ -38,3 +38,8 @@
     left: 50%;
     z-index: 100;
 }
+
+.template{
+    margin-top: 100px;
+    opacity: .6;
+}

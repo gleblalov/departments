@@ -35,3 +35,8 @@
 .employee-fields span{
     margin-right: 10px;
 }
+
+.template{
+    margin: 100px;
+    opacity: .6;
+}

@@ -53,6 +53,8 @@ export class ListDepartmentsComponent implements OnInit {
     this.depService.getDepartments().subscribe(response => {
       this.departments = response;
       this.depService.departments = this.departments;
+    }, err => {
+      console.error(err)
     });
   }
 
@@ -60,12 +62,13 @@ export class ListDepartmentsComponent implements OnInit {
     this.route.queryParams.subscribe(params => { 
       if (params && params.newDepartment){
         if(JSON.parse(params.isEditDepartment) === false){
-          this.department = JSON.parse(params.newDepartment);
+          const json = JSON.parse(params.newDepartment);
+          this.department = json.result;
           this.departments.push(this.department);
         }
 
         if(JSON.parse(params.isEditDepartment) === true){
-          this.department = JSON.parse(params.newDepartment);   
+          this.department = JSON.parse(params.newDepartment);
           this.departments.forEach((item, index) =>{
             if(item.id === this.department.id){
               this.departments[index] = this.department;
@@ -77,8 +80,13 @@ export class ListDepartmentsComponent implements OnInit {
   }
 
   deleteDepartment(id){
-    this.depService.deleteDepartment(id).subscribe();
-    this.departments = this.departments.filter(t => t.id !== id);
+    this.depService.deleteDepartment(id).subscribe(() => {
+      this.departments = this.departments.filter(t => t.id !== id);
+    }, err => {
+      alert(err.error.message)
+      console.error(err);
+    });
+    
   }
 }
 

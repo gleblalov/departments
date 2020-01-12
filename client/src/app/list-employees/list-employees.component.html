@@ -1,7 +1,7 @@
 <div class="section">
-    <span class="section-type">{{departmentId ? 'Employees for department - ' + getTitleDepartment(departmentId)  : 'All employees'}}</span>
+    <span class="section-type" *ngIf="employees.length" >{{departmentId ? 'Employees for department - ' + getTitleDepartment(departmentId)  : 'All employees'}}</span>
     <button type="button" class="btn btn-primary btn-create" [routerLink]="['/employees', 'edit-employee']">New employee</button>
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover"  *ngIf="employees.length, else noEmployees">
         <thead thead-light>     
         <tr>
             <th scope="col">First name</th>
@@ -26,6 +26,13 @@
         </tr>
         </tbody>
     </table>
+
+    <ng-template #noEmployees >
+        <div class="template">
+          <h1>The list of employees is empty</h1>
+        </div>
+    </ng-template> 
+
     <router-outlet></router-outlet>
 </div>
 

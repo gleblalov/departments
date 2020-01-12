@@ -53,24 +53,34 @@ export class EditEmployeeComponent implements OnInit {
   }
 
   saveEmployee() {
-    this.empService.checkEmail(this.form.value.email).subscribe(response => {
-      if(response === null){
         this.employee = {...this.form.value}
+
         if(this.isEditEmployee === false){
           this.empService.saveEmployee(this.employee).subscribe(response => {
+            console.log(response)
             this.passParameters(response);
+           }, err => {
+            if(err.error.message === 'this email is busy'){
+              this.validationEmail = false
+              console.error(err);
+            } else {
+              console.error(err);
+            }
            });
         }
     
         if(this.isEditEmployee === true){
           this.empService.editEmployee(this.employee).subscribe(() => {
             this.passParameters(this.employee);
+           }, err => {
+            if(err.error.message === 'this email is busy'){
+              this.validationEmail = false
+              console.error(err);
+            } else {
+              console.error(err);
+            }
            });
         } 
-      } else {
-        this.validationEmail = false;
-      }
-    });
   }
 
   passParameters(employee){
@@ -90,4 +100,25 @@ export class EditEmployeeComponent implements OnInit {
 }
 
 
+
+// saveEmployee() {
+//   this.empService.checkEmail(this.form.value.email).subscribe(response => {
+//     if(response === null){
+//       this.employee = {...this.form.value}
+//       if(this.isEditEmployee === false){
+//         this.empService.saveEmployee(this.employee).subscribe(response => {
+//           this.passParameters(response);
+//          });
+//       }
+  
+//       if(this.isEditEmployee === true){
+//         this.empService.editEmployee(this.employee).subscribe(() => {
+//           this.passParameters(this.employee);
+//          });
+//       } 
+//     } else {
+//       this.validationEmail = false;
+//     }
+//   });
+// }
 

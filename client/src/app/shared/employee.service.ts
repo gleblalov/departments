@@ -31,6 +31,6 @@ export class EmployeeService {
   } 
 
   checkEmail(email) : Observable<any>{
-    return this.http.get<Employee[]>(`${this.url}/test/${email}`);
+    return this.http.get<Employee[]>(`${this.url}/check/${email}`);
   }
 }

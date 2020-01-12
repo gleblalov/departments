@@ -35,6 +35,8 @@ export class ListEmployeesComponent implements OnInit {
   getEmployee(){
     this.empService.getEmployees(this.departmentId).subscribe(response => {
       this.employees = response;
+    }, err => {
+      console.error(err)
     });
   }
 
@@ -42,7 +44,8 @@ export class ListEmployeesComponent implements OnInit {
     this.route.queryParams.subscribe(params => { 
       if (params && params.newEmployee){
         if(JSON.parse(params.isEditEmployee) === false){
-          this.employee = JSON.parse(params.newEmployee);
+          const json = JSON.parse(params.newEmployee);
+          this.employee = json.result
           this.employees.push(this.employee);
         }
 
@@ -81,8 +84,12 @@ export class ListEmployeesComponent implements OnInit {
   }
 
   deleteEmployee(id){
-    this.empService.deleteEmployee(id).subscribe();
-    this.employees = this.employees.filter(t => t.id !== id);
+    this.empService.deleteEmployee(id).subscribe(() => {
+      this.employees = this.employees.filter(t => t.id !== id);
+    }, err => {
+      alert(err.error.message)
+      console.error(err);
+    });
   }
 
 }

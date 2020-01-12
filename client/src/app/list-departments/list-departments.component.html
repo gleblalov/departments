@@ -2,7 +2,7 @@
     <div class="section-table">
         <button type="button" class="btn btn-primary btn-create" [routerLink]="['/home', 'edit-department']">New department</button>
         <router-outlet ></router-outlet>
-        <table class="table table-sm table-hover">
+        <table class="table table-sm table-hover" *ngIf="departments.length, else noDepartments">
             <thead thead-light>     
             <tr>
                 <th scope="col">Title</th>
@@ -24,6 +24,12 @@
             </tr>
             </tbody>
         </table>
+
+        <ng-template #noDepartments >
+            <div class="template">
+              <h1>The list of departments is empty</h1>
+            </div>
+        </ng-template> 
     </div>
     
 </div>
