@@ -1,4 +1,4 @@
-import {IsString, MinLength, IsEmail, MaxLength, IsNotEmpty, IsDate} from "class-validator";
+import {IsString, MinLength, IsEmail, MaxLength, IsNotEmpty, IsDate, IsDateString} from "class-validator";
 
 export class Employee {
     
@@ -20,7 +20,7 @@ export class Employee {
    
     @IsString()
     @IsNotEmpty()
-    
+    @IsEmail()
     email: string
     
     @IsString()
