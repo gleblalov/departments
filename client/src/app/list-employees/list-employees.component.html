@@ -1,37 +1,49 @@
 <div class="section">
     <span class="section-type" *ngIf="employees.length" >{{departmentId ? 'Employees for department - ' + getTitleDepartment(departmentId)  : 'All employees'}}</span>
     <button type="button" class="btn btn-primary btn-create" [routerLink]="['/employees', 'edit-employee']">New employee</button>
-    <table class="table table-sm table-hover"  *ngIf="employees.length, else noEmployees">
-        <thead thead-light>     
-        <tr>
-            <th scope="col">First name</th>
-            <th scope="col">Last name</th>
-            <th scope="col">Position</th>
-            <th scope="col">Department</th>
-            <th scope="col">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let employee of employees">
-            <td>{{employee.fname}}</td>
-            <td>{{employee.lname}}</td>
-            <td>{{employee.position}}</td>
-            <td>{{getTitleDepartment(employee.departmentID)}}</td>
-            <td>
-                <div class="table-buttons">
-                    <i class="material-icons" (click)="openEmployee(employee)">create</i>
-                    <i class="material-icons" (click)="deleteEmployee(employee.id)">delete_sweep</i>
-                </div>
-            </td> 
-        </tr>
-        </tbody>
-    </table>
+    <div *ngIf="!isLoading, else spinner">
+        <table class="table table-sm table-hover"  *ngIf="employees.length, else noEmployees">
+            <thead thead-light>     
+            <tr>
+                <th scope="col">First name</th>
+                <th scope="col">Last name</th>
+                <th scope="col">Position</th>
+                <th scope="col">Department</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let employee of employees">
+                <td>{{employee.fname}}</td>
+                <td>{{employee.lname}}</td>
+                <td>{{employee.position}}</td>
+                <td>{{getTitleDepartment(employee.departmentID)}}</td>
+                <td>
+                    <div class="table-buttons">
+                        <i class="material-icons" (click)="openEmployee(employee)">create</i>
+                        <i class="material-icons" (click)="deleteEmployee(employee.id)">delete_sweep</i>
+                    </div>
+                </td> 
+            </tr>
+            </tbody>
+        </table>
 
-    <ng-template #noEmployees >
-        <div class="template">
-          <h1>The list of employees is empty</h1>
+        <ng-template #noEmployees >
+            <div class="template">
+            <h1>The list of employees is empty</h1>
+            </div>
+        </ng-template> 
+
+        <div class="alert alert-danger" role="alert" *ngIf="textError">
+            <strong>{{textError}}</strong> 
         </div>
-    </ng-template> 
+    </div>
+
+    <ng-template #spinner>
+        <div class="spinner-border spinner" role="status">
+            <span class="sr-only">Loading...</span>
+        </div> 
+    </ng-template>
 
     <router-outlet></router-outlet>
 </div>

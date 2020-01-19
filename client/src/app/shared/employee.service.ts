@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Employee } from '../model';
 import { Observable } from 'rxjs';
+import { delay } from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class EmployeeService {
     if(departmentId){
       return this.http.get<Employee[]>(`${this.url}/${departmentId}`);
     }
-    return this.http.get<Employee[]>(this.url);
+    return this.http.get<Employee[]>(this.url).pipe(delay(500));
   }
 
   saveEmployee(employee): Observable<Employee>{

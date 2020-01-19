@@ -3,12 +3,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, ObjectID } from 'typeorm';
 import { Departments, } from '../entities';
 import { Department, } from '../model';
+import { EmployeesService } from '../employees/employees.service';
 
 @Injectable()
 export class DepartmentsService {
     
     constructor(
         @InjectRepository(Departments) private departmentsRepository: Repository<Departments>,
+        private empService: EmployeesService,
       ) { }
 
     async getDepartments(): Promise<Department[]> {
@@ -53,7 +55,7 @@ export class DepartmentsService {
 
     async deleteDepartment(id: ObjectID) {
       const foundDepartment = await this.departmentsRepository.findOne(id)
-      console.log(foundDepartment)
+      this.empService.deleteDepartmentInEmployee(id);
 
       if(foundDepartment){
         return  this.departmentsRepository.delete(id);

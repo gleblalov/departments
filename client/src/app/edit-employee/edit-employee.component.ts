@@ -17,7 +17,9 @@ export class EditEmployeeComponent implements OnInit {
   form: FormGroup
   employee: Employee
   isEditEmployee: boolean
-  validationEmail: boolean
+  validationEmail: boolean;
+  textAlert: string;
+  isSuccesAlert: boolean;
 
   constructor(
     private empService: EmployeeService,
@@ -57,13 +59,20 @@ export class EditEmployeeComponent implements OnInit {
 
         if(this.isEditEmployee === false){
           this.empService.saveEmployee(this.employee).subscribe(response => {
-            console.log(response)
-            this.passParameters(response);
+            this.textAlert = 'New employee has been added successfully.'
+            this.isSuccesAlert = true;
+            setTimeout(()=> {
+              this.textAlert = ''
+              this.passParameters(response);
+            }, 2500)
            }, err => {
             if(err.error.message === 'this email is busy'){
               this.validationEmail = false
               console.error(err);
             } else {
+              this.textAlert = 'Response failure, try adding again.'
+              this.isSuccesAlert = false;
+              setTimeout(()=> this.textAlert = '', 2500)
               console.error(err);
             }
            });
@@ -71,12 +80,20 @@ export class EditEmployeeComponent implements OnInit {
     
         if(this.isEditEmployee === true){
           this.empService.editEmployee(this.employee).subscribe(() => {
-            this.passParameters(this.employee);
+            this.textAlert = 'Employee data has been modified successfully.'
+            this.isSuccesAlert = true;
+            setTimeout(()=> {
+              this.textAlert = ''
+              this.passParameters(this.employee);
+            }, 2500)
            }, err => {
             if(err.error.message === 'this email is busy'){
               this.validationEmail = false
               console.error(err);
             } else {
+              this.textAlert = 'Response failure, try adding again.'
+              this.isSuccesAlert = false;
+              setTimeout(()=> this.textAlert = '', 2500)
               console.error(err);
             }
            });

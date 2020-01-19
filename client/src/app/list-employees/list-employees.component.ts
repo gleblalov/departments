@@ -16,6 +16,8 @@ export class ListEmployeesComponent implements OnInit {
   employees: Employee[];
   employee: Employee;
   departmentId: string;
+  isLoading: boolean;
+  textError: string;
 
   constructor(
     private router: Router,
@@ -25,6 +27,7 @@ export class ListEmployeesComponent implements OnInit {
   ) {
     this.employees = [];
     this.departmentId = this.depService.departmentId
+    this.isLoading = false;
   }
 
   ngOnInit() {
@@ -33,10 +36,15 @@ export class ListEmployeesComponent implements OnInit {
   }
 
   getEmployee(){
+    this.isLoading = true
     this.empService.getEmployees(this.departmentId).subscribe(response => {
       this.employees = response;
+      this.isLoading = false;
     }, err => {
       console.error(err)
+      this.textError = `${err.status}: response failure, try to reload page`;
+      this.isLoading = false;
+      setTimeout(()=> this.textError = null, 2500)
     });
   }
 
@@ -62,12 +70,15 @@ export class ListEmployeesComponent implements OnInit {
   }
 
   getTitleDepartment(id){
-    let title;
-    this.depService.departments.forEach((item, index) => {
-      if(item.id == id){
-        title = this.depService.departments[index].title;
-      }
-    })
+    let title = 'Not distributed';
+    if(this.depService.departments){
+      this.depService.departments.forEach((item, index) => {
+        if(item.id == id){
+          title = this.depService.departments[index].title;
+        } 
+      })
+    }
+    
     
     return title;
   }

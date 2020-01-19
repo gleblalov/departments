@@ -18,7 +18,8 @@ export class EditDepartmenComponent implements OnInit {
   department: Department;
   isEditDepartment: boolean;
   validationTitle: boolean;
-  
+  textAlert: string;
+  isSuccesAlert: boolean;
 
   constructor(
     private router: Router,
@@ -57,25 +58,41 @@ export class EditDepartmenComponent implements OnInit {
 
       if(this.isEditDepartment === false){
         this.depService.saveDepartment(this.department).subscribe((response) => {
-          this.passParameters(response);
+          this.textAlert = 'New department has been added successfully.'
+          this.isSuccesAlert = true;
+          setTimeout(()=> {
+              this.textAlert = ''
+              this.passParameters(response);
+            }, 2500)
         }, err => {
           if(err.error.message === 'this title is already registered'){
             this.validationTitle = false
             console.error(err);
           } else {
             console.error(err);
+            this.isSuccesAlert = false;
+            this.textAlert = 'Response failure, try adding again.'
+            setTimeout(()=> this.textAlert = '', 2500)
           }
         });
       }
 
       if(this.isEditDepartment === true){
         this.depService.editDepartment(this.department).subscribe((response) => {
-          console.log(this.department)
-          this.passParameters(this.department);
+          this.textAlert = 'Department data has been modified successfully.'
+          this.isSuccesAlert = true;
+          setTimeout(()=> {
+            this.textAlert = ''
+            this.passParameters(this.department);
+          }, 2500)
         }, err => {
           if(err.error.message === 'this title is already registered'){
             this.validationTitle = false
+            console.error(err);
           } else {
+            this.textAlert = 'Response failure, try adding again.'
+            this.isSuccesAlert = false;
+            setTimeout(()=> this.textAlert = '', 2500)
             console.error(err);
           }
         });

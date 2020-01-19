@@ -43,3 +43,25 @@
     margin-top: 100px;
     opacity: .6;
 }
+
+.blockError{
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    z-index: 1000;
+
+    transform: translateX(-50%);
+
+    border: 1px solid rgb(151, 149, 149);
+    padding: 15px;
+
+    background-color: rgb(230, 227, 227);
+    color: rgba(248, 43, 43, 0.9);
+}
+
+.spinner{
+    position: absolute;
+    top: 35%;
+    left: 49%;
+    z-index: 1000;
+}

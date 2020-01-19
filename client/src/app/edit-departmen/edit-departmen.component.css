@@ -48,6 +48,16 @@ input{
     text-transform: capitalize;  
 }
 
+.alert{
+    position: absolute;
+    top: 35%;
+    left: 0;
+    z-index: 1500;
+
+    width: 100%;
+    text-align: center;
+}
+
 /* .input-title.ng-invalid.ng-touched{
     border: 1px solid red;
 }

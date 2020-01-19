@@ -54,3 +54,13 @@
 .letterUpperCase{
     text-transform: capitalize;
 }
+
+.alert{
+    position: absolute;
+    top: 45%;
+    left: 0;
+    z-index: 1500;
+
+    width: 100%;
+    text-align: center;
+}

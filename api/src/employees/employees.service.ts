@@ -77,4 +77,19 @@ export class EmployeesService {
 
         return byEmail
       }
+
+      async deleteDepartmentInEmployee(id) {
+        const emloyees = await this.employeesRepository.find({
+          where: {
+            departmentID: id
+          }
+        })
+        const deleteEmp = await this.employeesRepository.remove(emloyees);
+        emloyees.forEach( item => {
+          item.departmentID = null
+        })
+
+        const saveEmp = await this.employeesRepository.save(emloyees)
+        return saveEmp
+      }
 }

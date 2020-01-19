@@ -88,7 +88,12 @@
 
       <button class="btn btn-success btn-save" type="submit" [disabled]="form.invalid || form.pending">Save</button>
     </form>
+
+    <div class="alert" [class.alert-success]="isSuccesAlert" [class.alert-danger]="!isSuccesAlert" role="alert" *ngIf="textAlert">
+      <strong>{{textAlert}}</strong> 
+    </div>
  </div>
+ 
  
  
  

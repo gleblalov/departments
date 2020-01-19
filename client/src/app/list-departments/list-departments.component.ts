@@ -15,6 +15,8 @@ export class ListDepartmentsComponent implements OnInit {
 
   departments: Department[];
   department: Department;
+  isLoading: boolean;
+  textError: string;
   
   constructor(
     private router: Router,
@@ -27,6 +29,7 @@ export class ListDepartmentsComponent implements OnInit {
         title: '',
         describe: ''
       }
+      this.isLoading = false;
      }
 
   ngOnInit() {
@@ -50,11 +53,16 @@ export class ListDepartmentsComponent implements OnInit {
   }
 
   getDepartments(){
+    this.isLoading = true;
     this.depService.getDepartments().subscribe(response => {
       this.departments = response;
       this.depService.departments = this.departments;
+      this.isLoading = false;
     }, err => {
       console.error(err)
+      this.textError = `${err.status}: response failure, try to reload page`;
+      this.isLoading = false;
+      setTimeout(()=> this.textError = null, 2500)
     });
   }
 

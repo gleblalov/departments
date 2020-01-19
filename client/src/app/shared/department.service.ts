@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Department } from '../model';
 import { Observable } from 'rxjs';
+import { delay } from "rxjs/operators";
 
 
 @Injectable({
@@ -16,7 +17,7 @@ export class DepartmentService {
   constructor(private http: HttpClient) { }
 
   getDepartments(): Observable<Department[]>{
-    return this.http.get<Department[]>(this.url);
+    return this.http.get<Department[]>(this.url).pipe(delay(500));
   }
 
   saveDepartment(department): Observable<Department>{

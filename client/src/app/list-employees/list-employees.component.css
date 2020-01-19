@@ -40,3 +40,10 @@
     margin: 100px;
     opacity: .6;
 }
+
+.spinner{
+    position: absolute;
+    top: 35%;
+    left: 49%;
+    z-index: 1000;
+}
