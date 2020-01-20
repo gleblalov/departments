@@ -49,7 +49,7 @@
         <div class="form-group">
           <label>Position</label><br>
           <select class="select" formControlName='position'>
-            <option disabled>Choose a position</option>
+            <option disabled selected>Choose a position</option>
             <option value="Team Lead">Team Lead</option>
             <option value="Project manager">Project manager</option>
             <option value="Front-end developer">Front-end developer</option>
@@ -61,7 +61,7 @@
         <div class="form-group">
           <label>Experience</label><br>
           <select class="select" formControlName='experience'>
-            <option disabled>Choose a experience</option>
+            <option disabled selected>Choose a experience</option>
             <option value="Without experience">Without experience</option>
             <option value="Half a year">Half a year</option>
             <option value="One year">One year</option>
@@ -76,7 +76,7 @@
       <div class="form-group">
         <label>Department</label><br>
         <select class="select" formControlName='departmentID'>
-          <option disabled selected>Choose a experience</option>
+          <option selected [value]="">Not distributed</option>
           <option *ngFor="let department of depService.departments" [value]="department.id">{{department.title}}</option>      
         </select>
         <div *ngIf="form.get('departmentID').invalid" class="validationText">

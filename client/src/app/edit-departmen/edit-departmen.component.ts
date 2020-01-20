@@ -5,8 +5,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Department } from '../model';
 import { DepartmentService } from '../shared/department.service';
 
-
-
 @Component({
   selector: 'app-edit-departmen',
   templateUrl: './edit-departmen.component.html',
@@ -55,6 +53,7 @@ export class EditDepartmenComponent implements OnInit {
   
   saveDepartment(){
       this.department = {...this.form.value}
+      this.department.title = this.department.title[0].toUpperCase() + this.department.title.slice(1);
 
       if(this.isEditDepartment === false){
         this.depService.saveDepartment(this.department).subscribe((response) => {

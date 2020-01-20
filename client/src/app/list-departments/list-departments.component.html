@@ -13,8 +13,8 @@
                 </thead>
                 <tbody>
                 <tr *ngFor="let department of departments">
-                    <td>{{department.title}}</td>
-                    <td>{{department.describe}}</td>
+                    <td>{{department.title | titlecase}}</td>
+                    <td>{{department.describe | titlecase}}</td>
                     <td>
                         <div class="table-buttons">
                             <i class="material-icons" (click)="openDepartment(department)">create</i>
