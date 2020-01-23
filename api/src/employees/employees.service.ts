@@ -22,14 +22,14 @@ export class EmployeesService {
             departmentID: `${id}`,
           }
         });
-        
+
         return foundEmployees
       }
 
       async addEmployee(employee: Employee): Promise<Employee> {
-        const employeeByEmail = await this.checkEmail
+        const employeeByEmail = await this.checkEmail(employee.email)
 
-        if(employeeByEmail){
+        if(!employeeByEmail){
           const savedEmployee = await this.employeesRepository.save(employee);
           return savedEmployee
         } else {

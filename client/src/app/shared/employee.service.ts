@@ -14,7 +14,7 @@ export class EmployeeService {
 
   getEmployees(departmentId): Observable<Employee[]>{
     if(departmentId){
-      return this.http.get<Employee[]>(`${this.url}/${departmentId}`);
+      return this.http.get<Employee[]>(`${this.url}/${departmentId}`).pipe(delay(500));
     }
     return this.http.get<Employee[]>(this.url).pipe(delay(500));
   }

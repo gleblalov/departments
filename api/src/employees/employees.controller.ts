@@ -12,14 +12,8 @@ export class EmployeesController {
     async getEmployees(@Res() res) {
         const result = await this.empService.getEmployees();
 
-        if(result.length > 0){
+        if(result.length >= 0){
             return res.status(HttpStatus.OK).send(result);
-        }
-
-        if(result.length === 0){
-            return res.status(HttpStatus.NOT_FOUND).send({
-                message: 'Failed to get employees'
-            });
         }
     } 
 
@@ -27,14 +21,8 @@ export class EmployeesController {
     async getEmployeesForDepartment(@Res() res, @Param('id') id: ObjectID) {
         const result = await this.empService.getEmployeesForDepartment(id);
 
-        if(result.length > 0){
+        if(result.length >= 0){
             return res.status(HttpStatus.OK).send(result);
-        }
-
-        if(result.length === 0){
-            return res.status(HttpStatus.NOT_FOUND).send({
-                message: 'Failed to get employees'
-            });
         }
     }
 

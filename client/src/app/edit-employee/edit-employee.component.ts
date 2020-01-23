@@ -66,7 +66,7 @@ export class EditEmployeeComponent implements OnInit {
             setTimeout(()=> {
               this.textAlert = ''
               this.passParameters(response);
-            }, 2500)
+            }, 1500)
            }, err => {
             if(err.error.message === 'this email is busy'){
               this.validationEmail = false
@@ -74,7 +74,7 @@ export class EditEmployeeComponent implements OnInit {
             } else {
               this.textAlert = 'Response failure, try adding again.'
               this.isSuccesAlert = false;
-              setTimeout(()=> this.textAlert = '', 2500)
+              setTimeout(()=> this.textAlert = '', 1500)
               console.error(err);
             }
            });
@@ -87,7 +87,7 @@ export class EditEmployeeComponent implements OnInit {
             setTimeout(()=> {
               this.textAlert = ''
               this.passParameters(this.employee);
-            }, 2500)
+            }, 1500)
            }, err => {
             if(err.error.message === 'this email is busy'){
               this.validationEmail = false
@@ -95,7 +95,7 @@ export class EditEmployeeComponent implements OnInit {
             } else {
               this.textAlert = 'Response failure, try adding again.'
               this.isSuccesAlert = false;
-              setTimeout(()=> this.textAlert = '', 2500)
+              setTimeout(()=> this.textAlert = '', 1500)
               console.error(err);
             }
            });

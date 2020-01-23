@@ -1,5 +1,5 @@
 <div class="section">
-    <span class="section-type" *ngIf="employees.length" >{{departmentId ? 'Employees for department - ' + getTitleDepartment(departmentId)  : 'All employees'}}</span>
+    <span class="section-type" *ngIf="employees.length" >{{departmentId ? 'Employees for department - ' + getTitleDepartment(departmentId) : 'All employees'}}</span>
     <button type="button" class="btn btn-primary btn-create" [routerLink]="['/employees', 'edit-employee']">New employee</button>
     <div *ngIf="!isLoading, else spinner">
         <table class="table table-sm table-hover"  *ngIf="employees.length, else noEmployees">
@@ -14,10 +14,10 @@
             </thead>
             <tbody>
             <tr *ngFor="let employee of employees">
-                <td>{{employee.fname}}</td>
-                <td>{{employee.lname}}</td>
+                <td>{{employee.fname | titlecase}}</td>
+                <td>{{employee.lname | titlecase}}</td>
                 <td>{{employee.position}}</td>
-                <td>{{getTitleDepartment(employee.departmentID)}}</td>
+                <td>{{getTitleDepartment(employee.departmentID) | titlecase}}</td>
                 <td>
                     <div class="table-buttons">
                         <i class="material-icons" (click)="openEmployee(employee)">create</i>

@@ -77,7 +77,7 @@
         <label>Department</label><br>
         <select class="select" formControlName='departmentID'>
           <option selected [value]="">Not distributed</option>
-          <option *ngFor="let department of depService.departments" [value]="department.id">{{department.title}}</option>      
+          <option *ngFor="let department of depService.departments" [value]="department.id">{{department.title | titlecase}}</option>      
         </select>
         <div *ngIf="form.get('departmentID').invalid" class="validationText">
           <small *ngIf="form.get('departmentID').errors.required">

@@ -47,7 +47,7 @@ export class DepartmentsController {
     @Delete(':id')
     async deleteDepartment(@Res() res, @Param('id') id: ObjectID) {
         const result = await this.depService.deleteDepartment(id);
-        console.log(result)
+        
         if(result !== null){
             return res.status(HttpStatus.OK).send();
         }

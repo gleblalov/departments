@@ -62,7 +62,7 @@ export class EditDepartmenComponent implements OnInit {
           setTimeout(()=> {
               this.textAlert = ''
               this.passParameters(response);
-            }, 2500)
+            }, 1500)
         }, err => {
           if(err.error.message === 'this title is already registered'){
             this.validationTitle = false
@@ -71,7 +71,7 @@ export class EditDepartmenComponent implements OnInit {
             console.error(err);
             this.isSuccesAlert = false;
             this.textAlert = 'Response failure, try adding again.'
-            setTimeout(()=> this.textAlert = '', 2500)
+            setTimeout(()=> this.textAlert = '', 1500)
           }
         });
       }
@@ -83,7 +83,7 @@ export class EditDepartmenComponent implements OnInit {
           setTimeout(()=> {
             this.textAlert = ''
             this.passParameters(this.department);
-          }, 2500)
+          }, 1500)
         }, err => {
           if(err.error.message === 'this title is already registered'){
             this.validationTitle = false
@@ -91,7 +91,7 @@ export class EditDepartmenComponent implements OnInit {
           } else {
             this.textAlert = 'Response failure, try adding again.'
             this.isSuccesAlert = false;
-            setTimeout(()=> this.textAlert = '', 2500)
+            setTimeout(()=> this.textAlert = '', 1500)
             console.error(err);
           }
         });

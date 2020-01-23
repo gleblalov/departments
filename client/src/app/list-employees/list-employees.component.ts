@@ -26,7 +26,7 @@ export class ListEmployeesComponent implements OnInit {
     private depService: DepartmentService,
   ) {
     this.employees = [];
-    this.departmentId = this.depService.departmentId
+    
     this.isLoading = false;
   }
 
@@ -37,6 +37,7 @@ export class ListEmployeesComponent implements OnInit {
 
   getEmployee(){
     this.isLoading = true
+    this.departmentId = this.depService.departmentId
     this.empService.getEmployees(this.departmentId).subscribe(response => {
       this.employees = response;
       this.isLoading = false;
@@ -75,6 +76,7 @@ export class ListEmployeesComponent implements OnInit {
       this.depService.departments.forEach((item, index) => {
         if(item.id == id){
           title = this.depService.departments[index].title;
+          title = title[0].toUpperCase() + title.slice(1);
         } 
       })
     }
