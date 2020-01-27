@@ -27,15 +27,16 @@ export class EditEmployeeComponent implements OnInit {
     private route: ActivatedRoute,
     protected depService: DepartmentService,
   ) {
+    this.textAlert = '';
     this.isEditEmployee = false;
     this.validationEmail = true;
     this.form = new FormGroup({
       id: new FormControl(''),
-      fname: new FormControl('', [Validators.required]),
-      lname: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.email, Validators.required],),
+      fname: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z][a-zA-Z-\.]{1,20}$/)]),
+      lname: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z][a-zA-Z-\.]{1,20}$/)]),
+      email: new FormControl('', [Validators.required, Validators.pattern(/^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/)],),
       experience: new FormControl(''),
-      position: new FormControl(''),
+      position: new FormControl('', [Validators.required]),
       dateOfBirth: new FormControl(''),
       departmentID: new FormControl('', [Validators.required]),
     })
@@ -67,17 +68,7 @@ export class EditEmployeeComponent implements OnInit {
               this.textAlert = ''
               this.passParameters(response);
             }, 1500)
-           }, err => {
-            if(err.error.message === 'this email is busy'){
-              this.validationEmail = false
-              console.error(err);
-            } else {
-              this.textAlert = 'Response failure, try adding again.'
-              this.isSuccesAlert = false;
-              setTimeout(()=> this.textAlert = '', 1500)
-              console.error(err);
-            }
-           });
+           }, err => this.errorProcesing(err));
         }
     
         if(this.isEditEmployee === true){
@@ -88,18 +79,25 @@ export class EditEmployeeComponent implements OnInit {
               this.textAlert = ''
               this.passParameters(this.employee);
             }, 1500)
-           }, err => {
-            if(err.error.message === 'this email is busy'){
-              this.validationEmail = false
-              console.error(err);
-            } else {
-              this.textAlert = 'Response failure, try adding again.'
-              this.isSuccesAlert = false;
-              setTimeout(()=> this.textAlert = '', 1500)
-              console.error(err);
-            }
-           });
+           }, err => this.errorProcesing(err));
         } 
+  }
+
+  errorProcesing(err){
+    if(err.error.message === 'this email is already registered'){
+      this.validationEmail = false
+      this.textAlert = 'This email is already registered.'
+      setTimeout(()=> this.textAlert = '', 1500)
+    } else {
+      this.isSuccesAlert = false;
+      err.error.message.forEach(item => {
+        for(let key in item.constraints){
+          this.textAlert += `${item.constraints[key]}\n`
+        }
+      });
+      
+      setTimeout(()=> this.textAlert = '', 1500)
+    }
   }
 
   passParameters(employee){
@@ -115,6 +113,14 @@ export class EditEmployeeComponent implements OnInit {
 
   closeErrorBusy(){
     this.validationEmail = true;
+  }
+
+  getMaxDate(){
+    const newDate = new Date();
+    newDate.setFullYear(newDate.getFullYear() - 16, 0);
+    const maxDate = `${newDate.getFullYear()}-0${newDate.getMonth()+1}-${newDate.getDate()}`;
+
+    return maxDate;
   }
 }
 

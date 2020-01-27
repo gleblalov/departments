@@ -15,30 +15,23 @@ export class DepartmentsService {
 
     async getDepartments(): Promise<Department[]> {
       const departments = await this.departmentsRepository.find();
+      
       return departments
     }
 
     async addDepartment(department: Department): Promise<Department> {
-       const foundDepartment = await this.departmentsRepository.findOne({
-         where: {
-           title: department.title
-         }
-       })
+      const foundDepartment = await this.foundByTitle(department.title)
 
        if(!foundDepartment){
          const saveDepartment = await this.departmentsRepository.save(department);
-         return saveDepartment
-       } else {
-         return null
-       }
-    }
+         return saveDepartment;
+       } 
+
+       throw new Error('this title is already registered')
+      }
 
     async changeDepartment(id: ObjectID, department: Department)  {
-      const foundDepartment = await this.departmentsRepository.findOne({
-        where: {
-          title: department.title
-        }
-      })
+      const foundDepartment = await this.foundByTitle(department.title)
     
       if(!foundDepartment){
         const result = await this.departmentsRepository.update(id, department);
@@ -50,7 +43,7 @@ export class DepartmentsService {
         return result
       } 
       
-      return null
+      throw new Error('this title is already registered')
     }
 
     async deleteDepartment(id: ObjectID) {
@@ -59,9 +52,19 @@ export class DepartmentsService {
 
       if(foundDepartment){
         return  this.departmentsRepository.delete(id);
-      } else {
-        return null
-      }
+      } 
+      
+      throw new Error('Department was not deleted')
+    }
+
+    async foundByTitle(title) {
+      const foundDepartment = await this.departmentsRepository.findOne({
+        where: {
+          title: `${title}`,
+        }
+      });
+
+      return foundDepartment
     }
   
 }

@@ -1,25 +1,28 @@
-import {IsString, MinLength, IsEmail, MaxLength, IsNotEmpty, IsDate, IsDateString} from "class-validator";
+import {IsString, IsEmail, IsNotEmpty, NotContains, Length} from "class-validator";
 
 export class Employee {
     
-    @IsString()
     id?: string
     
     @IsString()
-    @IsNotEmpty()
+    @IsNotEmpty({ message: 'Department must not be empty.'})
     departmentID?: string
     
     @IsString()
-    @IsNotEmpty()
+    @IsNotEmpty({ message: 'First name must not be empty.'})
+    @Length(2, 20, { message: 'First name length must be in the range of 2 to 20.'})
+    @NotContains(' ', {  message: 'First name must not contain a space.'})
     fname: string
     
     @IsString()
-    @IsNotEmpty()
+    @IsNotEmpty({ message: 'Last name must not be empty.'})
+    @Length(3, 20, { message: 'Last name length must be in the range of 2 to 20.'})
+    @NotContains(' ', {  message: 'Last name must not contain a space.'})
     lname: string
     
    
     @IsString()
-    @IsNotEmpty()
+    @IsNotEmpty({ message: 'Email must not be empty.'})
     @IsEmail()
     email: string
     
@@ -27,8 +30,8 @@ export class Employee {
     experience?: string
     
     @IsString()
+    @IsNotEmpty({ message: 'Position must not be empty.'})
     position?: string
-    
     
     dateOfBirth?: Date
 }

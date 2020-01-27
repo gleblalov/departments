@@ -17,6 +17,8 @@ export class ListDepartmentsComponent implements OnInit {
   department: Department;
   isLoading: boolean;
   textError: string;
+  textAlert: string;
+  isSuccesAlert: boolean;
   
   constructor(
     private router: Router,
@@ -30,6 +32,7 @@ export class ListDepartmentsComponent implements OnInit {
         describe: ''
       }
       this.isLoading = false;
+      this.textAlert = '';
      }
 
   ngOnInit() {
@@ -59,7 +62,6 @@ export class ListDepartmentsComponent implements OnInit {
       this.depService.departments = this.departments;
       this.isLoading = false;
     }, err => {
-      console.error(err)
       this.textError = `${err.status}: response failure, try to reload page`;
       this.isLoading = false;
       setTimeout(()=> this.textError = null, 2500)
@@ -90,9 +92,14 @@ export class ListDepartmentsComponent implements OnInit {
   deleteDepartment(id){
     this.depService.deleteDepartment(id).subscribe(() => {
       this.departments = this.departments.filter(t => t.id !== id);
+      this.textAlert = 'Department was successfully deleted.'
+      this.isSuccesAlert = true;
+      setTimeout(()=> this.textAlert = '', 1500)
     }, err => {
-      alert(err.error.message)
-      console.error(err);
+      this.isSuccesAlert = false;
+      this.textAlert = 'Department was not deleted.'
+      
+      setTimeout(()=> this.textAlert = '', 1500)
     });
     
   }

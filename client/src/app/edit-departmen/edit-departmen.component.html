@@ -5,11 +5,11 @@
       
         <div class="form-group">
           <label>Title</label>
-          <input (input)='closeErrorBusy()' type="text" class="form-control input-title" placeholder="Title" formControlName='title'>
-            <small class="validation" *ngIf="form.get('title').invalid && form.get('title').touched && form.get('title').errors.required ">
+          <input (input)='closeErrorBusy()' type="text" class="form-control input-title validation" placeholder="Title" formControlName='title'>
+            <small class="validationError" *ngIf="form.get('title').invalid && form.get('title').touched && form.get('title').errors.required ">
               The field can`t be empty
             </small>   
-            <small class="validation" *ngIf="this.validationTitle === false">
+            <small class="validationError" *ngIf="this.validationTitle === false">
               Title `{{form.get('title').value}}` is busy
             </small> 
         </div>
@@ -19,7 +19,7 @@
           <input type="text" class="form-control" placeholder="Describe" formControlName='describe'>
         </div>
   
-        <button class="btn btn-success btn-save" type="submit" [disabled]="form.invalid">Save</button>
+        <button class="btn btn-success btn-save" type="submit" [disabled]="">Save</button>
       </form>
 
       <div class="alert" [class.alert-success]="isSuccesAlert" [class.alert-danger]="!isSuccesAlert"  role="alert" *ngIf="textAlert">

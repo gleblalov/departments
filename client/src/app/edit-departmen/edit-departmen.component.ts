@@ -26,14 +26,11 @@ export class EditDepartmenComponent implements OnInit {
     ) { 
     this.form = new FormGroup({
       id: new FormControl(''),
-      title: new FormControl('', [Validators.required]),
+      title: new FormControl('', [Validators.required, Validators.pattern(/^[A-z][A-z0-9-]*$/)]),
       describe: new FormControl('',),
-    })
-    this.department = {
-      title: '',
-      describe: ''
-    }
+    })  
     
+    this.textAlert = '';
     this.isEditDepartment = false;
     this.validationTitle = true;
   }
@@ -63,38 +60,18 @@ export class EditDepartmenComponent implements OnInit {
               this.textAlert = ''
               this.passParameters(response);
             }, 1500)
-        }, err => {
-          if(err.error.message === 'this title is already registered'){
-            this.validationTitle = false
-            console.error(err);
-          } else {
-            console.error(err);
-            this.isSuccesAlert = false;
-            this.textAlert = 'Response failure, try adding again.'
-            setTimeout(()=> this.textAlert = '', 1500)
-          }
-        });
+        }, err => this.errorProcessing(err));
       }
 
       if(this.isEditDepartment === true){
-        this.depService.editDepartment(this.department).subscribe((response) => {
+        this.depService.editDepartment(this.department.id, this.department).subscribe(() => {
           this.textAlert = 'Department data has been modified successfully.'
           this.isSuccesAlert = true;
           setTimeout(()=> {
-            this.textAlert = ''
+            this.textAlert = '';
             this.passParameters(this.department);
           }, 1500)
-        }, err => {
-          if(err.error.message === 'this title is already registered'){
-            this.validationTitle = false
-            console.error(err);
-          } else {
-            this.textAlert = 'Response failure, try adding again.'
-            this.isSuccesAlert = false;
-            setTimeout(()=> this.textAlert = '', 1500)
-            console.error(err);
-          }
-        });
+        }, err => this.errorProcessing(err));
       }
   }
 
@@ -112,7 +89,32 @@ export class EditDepartmenComponent implements OnInit {
     this.validationTitle = true;
   }
 
+  errorProcessing(err){
+    if(err.error.message === 'this title is already registered'){
+      this.validationTitle = false
+      this.textAlert = 'This title is already registered.'
+      
+      setTimeout(()=> this.textAlert = '', 1500)
+    } else {
+      this.isSuccesAlert = false;
+      for(let key in err.error.message[0].constraints){
+        this.textAlert +=  err.error.message[0].constraints[key]
+      }
+
+      setTimeout(()=> this.textAlert = '', 2500)
+    }
+  }
+
 }
+
+
+
+
+
+
+
+
+
 
 
 
@@ -193,3 +195,8 @@ export class EditDepartmenComponent implements OnInit {
 //   };
 //   this.router.navigate([''], navigationExtras);
 // }
+
+ // [A-z][A-z0-9_-][ \S]
+    // /^[A-z][A-z0-9_-]*$/
+
+    // /^(?! )(?!.* $)(?!(?:.* ){2}).+$/

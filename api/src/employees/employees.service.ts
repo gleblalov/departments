@@ -27,35 +27,30 @@ export class EmployeesService {
       }
 
       async addEmployee(employee: Employee): Promise<Employee> {
-        const employeeByEmail = await this.checkEmail(employee.email)
+        const foundEmployee = await this.foundByEmail(employee.email)
 
-        if(!employeeByEmail){
+        if(!foundEmployee){
           const savedEmployee = await this.employeesRepository.save(employee);
           return savedEmployee
-        } else {
-          return null
         }
-        
+
+        throw new Error('this email is already registered')
       }
 
       async changeEmployee(id: ObjectID, employee: Employee) {
-        const foundEmployees = await this.employeesRepository.findOne({
-          where: {
-            email: employee.email
-          }
-        })
+        const foundEmployee = await this.foundByEmail(employee.email)
 
-        if(!foundEmployees){
+        if(!foundEmployee){
           const result = await this.employeesRepository.update(id, employee);
           return result
         } 
 
-        if(foundEmployees && foundEmployees.id == employee.id){
+        if(foundEmployee && foundEmployee.id == employee.id){
           const result = await this.employeesRepository.update(id, employee);
           return result
         } 
         
-        return null
+        throw new Error('this email is already registered')
       }
 
       async deleteEmployee(id: ObjectID) {
@@ -63,19 +58,19 @@ export class EmployeesService {
 
         if(foundEmployee){
           return this.employeesRepository.delete(id);
-        } else {
-          return null
-        }
+        } 
+        
+        throw new Error('Employee was not deleted')
       }
 
-      async checkEmail(email) {
-        const byEmail = await this.employeesRepository.findOne({
+      async foundByEmail(email) {
+        const foundEmployee = await this.employeesRepository.findOne({
           where: {
             email: `${email}`,
           }
         });
 
-        return byEmail
+        return foundEmployee
       }
 
       async deleteDepartmentInEmployee(id) {

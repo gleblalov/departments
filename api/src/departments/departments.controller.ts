@@ -17,44 +17,28 @@ export class DepartmentsController {
 
     @Post()
     async addDepartment(@Res() res, @Body() department: Department) {
-        const result = await this.depService.addDepartment(department);
-
-        if(result !== null){
-            return res.status(HttpStatus.OK).json({result});
-        }
-        if(result === null){
-            return res.status(HttpStatus.NOT_FOUND).send({
-                message: 'this title is already registered'
-            });
-        }
-        
+        this.depService.addDepartment(department)
+            .then((result) => res.status(HttpStatus.OK).json({result}))
+            .catch((err) => this.sendErrorMessage(err, res));        
     }
 
     @Put(':id')
-    async changeDepartment(@Res() res, @Param('id') id: ObjectID, @Body() department: Department) {
-        const result = await this.depService.changeDepartment(id, department);
-
-        if(result !== null){
-            return res.status(HttpStatus.OK).send();
-        }
-        if(result === null){
-            return res.status(HttpStatus.NOT_FOUND).send({
-                message: 'this title is already registered'
-            });
-        }
+    changeDepartment(@Res() res, @Param('id') id: ObjectID, @Body() department: Department) {
+        this.depService.changeDepartment(id, department)
+            .then(() => res.status(HttpStatus.OK).send())
+            .catch((err) => this.sendErrorMessage(err, res));
     }
 
     @Delete(':id')
-    async deleteDepartment(@Res() res, @Param('id') id: ObjectID) {
-        const result = await this.depService.deleteDepartment(id);
-        
-        if(result !== null){
-            return res.status(HttpStatus.OK).send();
-        }
-        if(result === null){
-            return res.status(HttpStatus.NOT_FOUND).send({
-                message: 'Department was not deleted'
-            });
-        }
+    deleteDepartment(@Res() res, @Param('id') id: ObjectID) {
+        this.depService.deleteDepartment(id)
+            .then(() => res.status(HttpStatus.OK).send())
+            .catch((err) => this.sendErrorMessage(err, res));
+    }
+
+    sendErrorMessage(err, res){
+        return res.status(HttpStatus.NOT_FOUND).send({
+            message: err.message
+        });
     }
 }

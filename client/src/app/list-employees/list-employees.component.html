@@ -45,6 +45,10 @@
         </div> 
     </ng-template>
 
+    <div class="alert" [class.alert-success]="isSuccesAlert" [class.alert-danger]="!isSuccesAlert"  role="alert" *ngIf="textAlert">
+        <strong>{{textAlert}}</strong> 
+    </div>
+
     <router-outlet></router-outlet>
 </div>
 

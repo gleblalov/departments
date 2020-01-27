@@ -1,16 +1,18 @@
-import {IsString, MinLength, IsEmail, MaxLength, IsNotEmpty} from "class-validator";
+import {IsString, MinLength, MaxLength, IsNotEmpty, NotContains, } from "class-validator";
+
 
 export class Department {
     
-    @IsString()
-    id: string;
+    id?: string;
 
-    
     @IsString()
-    @IsNotEmpty()
+    @MinLength(2, {message: 'The name must be more than two characters.'})
+    @MaxLength(15, {message: 'Title exceeds character limit.'})
+    @IsNotEmpty({ message: 'Title must not be empty.'})
+    @NotContains(' ', {  message: 'Title must not contain a space.'})
     title: string;
 
     @IsString()
-    @MaxLength(200)
+    @MaxLength(150, {message: 'Title exceeds character limit.'})
     describe?: string;
 }

@@ -47,3 +47,14 @@
     left: 49%;
     z-index: 1000;
 }
+
+.alert{
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    z-index: 1500;
+
+    transform: translateX(-50%);
+    width: 50%;
+    text-align: center;
+}

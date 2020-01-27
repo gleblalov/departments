@@ -36,12 +36,16 @@
     width: 30%;
 }
 
-.validation {
+.validationError {
     color: red;
-  }
+}
 
-.validationBorder{
+.validation.ng-invalid.ng-touched{
     border: 1px solid red;
+}
+
+.validation.ng-valid.ng-touched{
+    border: 1px solid green;
 }
 
 input{

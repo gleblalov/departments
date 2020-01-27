@@ -4,7 +4,7 @@
    <form  [formGroup]="form" (ngSubmit)="saveEmployee()">
     
       <div class="form-group">
-        <label>First name</label>
+        <label>First name*</label>
         <input type="text" class="form-control validation letterUpperCase" placeholder="First name" formControlName='fname'>
         <div *ngIf="form.get('fname').invalid && form.get('fname').touched" class="validationText">
           <small *ngIf="form.get('fname').errors.required">
@@ -14,7 +14,7 @@
       </div>
 
       <div class="form-group">
-        <label>Last name</label>
+        <label>Last name*</label>
         <input type="text" class="form-control validation letterUpperCase" placeholder="Last name" formControlName='lname'>
         <div *ngIf="form.get('lname').invalid && form.get('lname').touched" class="validationText">
           <small *ngIf="form.get('lname').errors.required">
@@ -24,8 +24,8 @@
       </div>
 
       <div class="form-group">
-        <label>Email</label>
-        <input (input)='closeErrorBusy()' type="text" class="form-control" placeholder="Email" formControlName='email'>
+        <label>Email*</label>
+        <input (input)='closeErrorBusy()' type="text" class="form-control validation" placeholder="Email" formControlName='email'>
         <div *ngIf="form.get('email').invalid && form.get('email').touched" class="validationText">
           <small *ngIf="form.get('email').errors.required">
             The field can`t be empty
@@ -42,26 +42,32 @@
 
       <div class="form-group">
          <label>Date of birth</label>
-         <input type="date" class="form-control" placeholder="First name" formControlName='dateOfBirth'>
+         <input type="date" class="form-control" placeholder="First name" formControlName='dateOfBirth' min="1950-1-01" max='{{getMaxDate()}}'>
       </div>
 
       <div class="section-additionally">
         <div class="form-group">
-          <label>Position</label><br>
+          <label>Position*</label><br>
           <select class="select" formControlName='position'>
-            <option disabled selected>Choose a position</option>
+            <option value="" disabled>Choose position</option>
             <option value="Team Lead">Team Lead</option>
             <option value="Project manager">Project manager</option>
             <option value="Front-end developer">Front-end developer</option>
             <option value="Back-end developer">Back-end developer</option>
             <option value="Full-stack developer">Full-stack developer</option>        
           </select>
+
+          <div *ngIf="form.get('position').invalid  && form.get('position').touched" class="validationText">
+            <small *ngIf="form.get('position').errors.required">
+              Choose position
+            </small>
+          </div>
         </div>
 
         <div class="form-group">
           <label>Experience</label><br>
           <select class="select" formControlName='experience'>
-            <option disabled selected>Choose a experience</option>
+            <option value="" disabled>Choose experience</option>
             <option value="Without experience">Without experience</option>
             <option value="Half a year">Half a year</option>
             <option value="One year">One year</option>
@@ -74,19 +80,21 @@
       </div>
 
       <div class="form-group">
-        <label>Department</label><br>
+        <label>Department*</label><br>
         <select class="select" formControlName='departmentID'>
-          <option selected [value]="">Not distributed</option>
+          <option value="" disabled>Choose department</option>
+          <option [value]="'Not distributed'">Not distributed</option>
           <option *ngFor="let department of depService.departments" [value]="department.id">{{department.title | titlecase}}</option>      
         </select>
-        <div *ngIf="form.get('departmentID').invalid" class="validationText">
+        <div *ngIf="form.get('departmentID').invalid && form.get('departmentID').touched" class="validationText">
           <small *ngIf="form.get('departmentID').errors.required">
             Choose department
           </small>
         </div>
       </div>
 
-      <button class="btn btn-success btn-save" type="submit" [disabled]="form.invalid || form.pending">Save</button>
+      <button class="btn btn-success btn-save" type="submit" [disabled]="">Save</button>
+      <!-- [disabled]="form.invalid || form.pending" -->
     </form>
 
     <div class="alert" [class.alert-success]="isSuccesAlert" [class.alert-danger]="!isSuccesAlert" role="alert" *ngIf="textAlert">

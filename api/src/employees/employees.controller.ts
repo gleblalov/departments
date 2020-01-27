@@ -12,66 +12,42 @@ export class EmployeesController {
     async getEmployees(@Res() res) {
         const result = await this.empService.getEmployees();
 
-        if(result.length >= 0){
-            return res.status(HttpStatus.OK).send(result);
-        }
+        return res.status(HttpStatus.OK).send(result);
     } 
 
     @Get(':id')
     async getEmployeesForDepartment(@Res() res, @Param('id') id: ObjectID) {
         const result = await this.empService.getEmployeesForDepartment(id);
 
-        if(result.length >= 0){
-            return res.status(HttpStatus.OK).send(result);
-        }
+         return res.status(HttpStatus.OK).send(result);
     }
 
     @Post()
     async addEmployee(@Res() res, @Body() employee: Employee) {
-        const result = await this.empService.addEmployee(employee); 
-
-        if(result !== null){
-            return res.status(HttpStatus.OK).json({result});
-        }
-        if(result === null){
-            return res.status(HttpStatus.NOT_FOUND).send({
-                message: 'this email is busy'
-            });
-        }
+        this.empService.addEmployee(employee)
+            .then((result) => res.status(HttpStatus.OK).json({result}))
+            .catch((err) => this.sendErrorMessage(err, res));
     }
 
     @Put(':id')
     async changeEmployee(@Res() res, @Param('id') id: ObjectID, @Body() employee: Employee) {
-        const result = await this.empService.changeEmployee(id, employee);
-
-        if(result !== null){
-            return res.status(HttpStatus.OK).send();
-        }
-        if(result === null){
-            return res.status(HttpStatus.NOT_FOUND).send({
-                message: 'this email is busy'
-            });
-        }
+        this.empService.changeEmployee(id, employee)
+            .then(() => res.status(HttpStatus.OK).send())
+            .catch((err) => this.sendErrorMessage(err, res));
     }
 
     @Delete(':id')
     async deleteEmployee(@Res() res, @Param('id') id: ObjectID) {
-        const result = await this.empService.deleteEmployee(id);
+        this.empService.deleteEmployee(id)
+            .then(() => res.status(HttpStatus.OK).send())
+            .catch((err) => this.sendErrorMessage(err, res));
+    }
 
-        if(result !== null){
-            return res.status(HttpStatus.OK).send();
-        }
-        if(result === null){
-            return res.status(HttpStatus.NOT_FOUND).send({
-                message: 'Employee was not deleted'
-            });
-        }
+    sendErrorMessage(err, res){
+        return res.status(HttpStatus.NOT_FOUND).send({
+            message: err.message
+        });
     }
 }
 
 
-
-// @Get('check/:email')
-    //  checkEmail(@Param('email') email: string) {
-    //     return  this.empService.checkEmail(email); 
-    // }
