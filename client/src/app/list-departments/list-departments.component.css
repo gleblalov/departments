@@ -9,15 +9,28 @@
     width: 90%;
 }
 
-.btn-create{
+.blockControl{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
     width: auto;
-    height: 5%;
-    text-align: center;
-    line-height: 0;
+
     position: absolute;
-    top: 6%;
+    top: 4%;
     right: 20%;
     z-index: 1;
+}
+
+.btn-search{
+    height: 37px;
+    text-align: center;
+    line-height: 1;
+    margin-right: 2px;
+}
+
+.inputFilter{
+    width: auto;
 }
 
 .section i{
@@ -76,3 +89,4 @@
     width: 50%;
     text-align: center;
 }
+

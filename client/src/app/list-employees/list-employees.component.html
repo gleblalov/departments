@@ -1,7 +1,16 @@
 <div class="section">
     <span class="section-type" *ngIf="employees.length" >{{departmentId ? 'Employees for department - ' + getTitleDepartment(departmentId) : 'All employees'}}</span>
-    <button type="button" class="btn btn-primary btn-create" [routerLink]="['/employees', 'edit-employee']">New employee</button>
+    
+    <div class="blockControl">
+        <input *ngIf="isInputFilter" type="text" class="form-control inputFilter"  placeholder="Filter by last name..." [(ngModel)]="searchString" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+        <button type="button" class="btn btn-primary btn-search" (click)="isInputFilter = !isInputFilter; searchString = ''">
+            <i class="material-icons">search</i>
+        </button>
+        <button type="button" class="btn btn-primary btn-create" [routerLink]="['/employees', 'edit-employee']">New employee</button>
+    </div>
+
     <div *ngIf="!isLoading, else spinner">
+        
         <table class="table table-sm table-hover"  *ngIf="employees.length, else noEmployees">
             <thead thead-light>     
             <tr>
@@ -13,7 +22,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let employee of employees">
+            <tr *ngFor="let employee of employees | filterArr:searchString:'lname'">
                 <td>{{employee.fname | titlecase}}</td>
                 <td>{{employee.lname | titlecase}}</td>
                 <td>{{employee.position}}</td>

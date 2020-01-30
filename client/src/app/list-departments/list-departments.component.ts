@@ -19,6 +19,8 @@ export class ListDepartmentsComponent implements OnInit {
   textError: string;
   textAlert: string;
   isSuccesAlert: boolean;
+  searchString: string = '';
+  isInputFilter: boolean;
   
   constructor(
     private router: Router,
@@ -32,6 +34,7 @@ export class ListDepartmentsComponent implements OnInit {
         describe: ''
       }
       this.isLoading = false;
+      this.isInputFilter = false;
       this.textAlert = '';
      }
 

@@ -20,6 +20,8 @@ export class ListEmployeesComponent implements OnInit {
   textError: string;
   textAlert: string;
   isSuccesAlert: boolean;
+  searchString: string = '';
+  isInputFilter: boolean;
 
   constructor(
     private router: Router,
@@ -30,12 +32,18 @@ export class ListEmployeesComponent implements OnInit {
     this.employees = [];
     
     this.isLoading = false;
+    this.isInputFilter = false;
     this.textAlert = '';
   }
 
   ngOnInit() {
     this.getEmployee();
     this.getQueryParams();
+    if(this.depService.departments === undefined){
+      this.depService.getDepartments().subscribe(response => {
+        this.depService.departments = response;
+      } )
+    }
   }
 
   getEmployee(){

@@ -10,6 +10,7 @@ import { ListEmployeesComponent } from './list-employees/list-employees.componen
 import { EditDepartmenComponent } from './edit-departmen/edit-departmen.component';
 import { EditEmployeeComponent } from './edit-employee/edit-employee.component';
 import { HttpClientModule } from '@angular/common/http';
+import { FilterArrPipe } from './shared/filter-arr.pipe';
 
 
 
@@ -22,6 +23,7 @@ import { HttpClientModule } from '@angular/common/http';
     ListEmployeesComponent,
     EditDepartmenComponent,
     EditEmployeeComponent,
+    FilterArrPipe,
   ],
   imports: [
     BrowserModule,

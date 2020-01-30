@@ -57,8 +57,10 @@ export class EditEmployeeComponent implements OnInit {
 
   saveEmployee() {
         this.employee = {...this.form.value}
-        this.employee.fname = this.employee.fname[0].toUpperCase() + this.employee.fname.slice(1);
-        this.employee.lname = this.employee.lname[0].toUpperCase() + this.employee.lname.slice(1);
+        if(this.employee.fname !== '' && this.employee.lname !== ''){
+          this.employee.fname = this.employee.fname[0].toUpperCase() + this.employee.fname.slice(1);
+          this.employee.lname = this.employee.lname[0].toUpperCase() + this.employee.lname.slice(1);
+        }
 
         if(this.isEditEmployee === false){
           this.empService.saveEmployee(this.employee).subscribe(response => {

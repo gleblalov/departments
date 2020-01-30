@@ -1,6 +1,13 @@
 <div class="section">
     <div class="section-table">
-        <button type="button" class="btn btn-primary btn-create" [routerLink]="['/home', 'edit-department']">New department</button>
+        <div class="blockControl">
+            <input *ngIf="isInputFilter" type="text" class="form-control inputFilter"  placeholder="Filter by title..." [(ngModel)]="searchString" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+            <button type="button" class="btn btn-primary btn-search" (click)="isInputFilter = !isInputFilter; searchString = ''">
+                <i class="material-icons">search</i>
+            </button>
+            <button type="button" class="btn btn-primary btn-create" [routerLink]="['/home', 'edit-department']">New department</button>
+        </div>
+        
         <router-outlet ></router-outlet>
         <div *ngIf="!isLoading, else spinner">
             <table class="table table-sm table-hover" *ngIf="departments.length, else noDepartments">
@@ -12,7 +19,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let department of departments">
+                <tr *ngFor="let department of departments | filterArr:searchString:'title'">
                     <td>{{department.title | titlecase}}</td>
                     <td>{{department.describe | titlecase}}</td>
                     <td>
